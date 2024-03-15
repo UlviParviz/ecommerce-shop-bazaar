@@ -6,6 +6,8 @@ import Header from './layouts/Header'
 import Sidebar from './layouts/Sidebar'
 import Footer from './layouts/Footer'
 import Wishlist from './pages/Wishlist'
+import Products from './pages/Products'
+import ScrollToTop from './components/ScrollToTop'
 
 
 
@@ -13,9 +15,11 @@ const App = () => {
   return (
     
     <Router>
+      <ScrollToTop/>
       <Header/>
       <Routes>
         <Route  path="/" element={<Home />} />
+        <Route  path="/products" element={<Products />} />
         <Route  path="/wishlist" element={<Wishlist />} />
         <Route path='/product/:id' element={<ProductDetails/>}/>
 

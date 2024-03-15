@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../contexts/CartContext";
 import { ProductContext } from "../contexts/ProductContext";
@@ -15,6 +15,13 @@ const ProductDetails = () => {
 
   const product = products.find((product) => product.id === parseInt(id));
 
+  const [inWishlist, setInWishlist] = useState(false);
+
+  useEffect(() => {
+    const isInWishlist = wishlist.some((item) => item.id === product.id);
+    setInWishlist(isInWishlist);
+  }, [wishlist, product.id]);
+
   if (!product) {
     return (
       <section className="h-screen flex justify-center items-center">
@@ -24,24 +31,17 @@ const ProductDetails = () => {
   }
 
   const { title, price, description, image, rating } = product;
-  const [inWishlist, setInWishlist] = useState(false);
 
-  // Check if product is in wishlist
-  useState(() => {
-    const isInWishlist = wishlist.some((item) => item.id === product.id);
-    setInWishlist(isInWishlist);
-  }, [wishlist]);
-
-const handleWishlistToggle = () => {
-  if (inWishlist) {
-    removeFromWishlist(product.id);
-  } else {
-    console.log("Adding to wishlist:", product.id);
-  }
-  setInWishlist(!inWishlist); 
-};
-
-  
+  const handleWishlistToggle = () => {
+    if (inWishlist) {
+      
+      removeFromWishlist(product.id);
+    } else {
+      
+      addToWishlist(product, product.id);
+    }
+    setInWishlist(!inWishlist);
+  };
 
   return (
     <section className="pt-32 pb-12 lg:py-32 h-screen flex items-center">
