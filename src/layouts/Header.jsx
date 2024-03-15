@@ -23,10 +23,10 @@ const Header = () => {
   })
 
   return (
-    <header className={`${isActive ? 'bg-white py-4 shadow-md' : 'py-6 bg-none'} fixed w-full z-10`}>
+    <header className={`${isActive ? 'bg-white py-1 shadow-md' : 'py-2 bg-none'} fixed w-full z-10`}>
       <div className='container mx-auto flex items-center justify-between h-full transition-all '>
       <Link to={'/'}>
-        <img className='w-[60px]' src={Logo} alt="" />
+        <img className='w-[80px]' src={Logo} alt="" />
       </Link>
       <div onClick={handleOpen} className='cursor-pointer flex relative'><BsBag className='text-2xl '/>
       
