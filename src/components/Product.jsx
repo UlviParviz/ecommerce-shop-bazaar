@@ -9,7 +9,7 @@ const Product = ({ product }) => {
   const {addToCart} = useContext(CartContext)
 
   return (
-    <div>
+    <div >
       <div className="border border-[#e4e4e4] h-[300px] relative overflow-hidden group transition">
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-[200px] mx-auto flex justify-center items-center ">
