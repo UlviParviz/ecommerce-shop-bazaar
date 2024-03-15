@@ -61,6 +61,7 @@ const ProductDetails = () => {
               <Rating value={rating.rate} readOnly />
             </div>
             <p className="mb-8 capitalize">{description}</p>
+            <div className="flex gap-3 items-center justify-center lg:justify-start">
 
             <a
               href="#_"
@@ -90,6 +91,7 @@ const ProductDetails = () => {
                 Add To Cart
               </span>
             </button>
+            </div>
           </div>
         </div>
       </div>

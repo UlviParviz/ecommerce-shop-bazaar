@@ -7,7 +7,7 @@ const Wishlist = () => {
   const { wishlist } = useContext(WishlistContext);
 
   return (
-<section className='pt-[8%] pb-16 h-[100vh] relative'>
+<section className='pt-[80px] pb-16 min-h-[750px] lg:pt-[7%]'>
   <div className='container mx-auto'>
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm mx-auto md:max-w-none md:mx-0'>
       {wishlist && wishlist.length > 0 ? (
