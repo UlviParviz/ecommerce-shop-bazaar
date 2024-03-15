@@ -1,16 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../contexts/CartContext";
 import { ProductContext } from "../contexts/ProductContext";
 import { Rating } from "@mui/material";
+import { WishlistContext } from "../contexts/WishlistContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { products } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
+  const { wishlist, addToWishlist, removeFromWishlist } = useContext(
+    WishlistContext
+  );
 
   const product = products.find((product) => product.id === parseInt(id));
-
 
   if (!product) {
     return (
@@ -21,11 +24,30 @@ const ProductDetails = () => {
   }
 
   const { title, price, description, image, rating } = product;
+  const [inWishlist, setInWishlist] = useState(false);
+
+  // Check if product is in wishlist
+  useState(() => {
+    const isInWishlist = wishlist.some((item) => item.id === product.id);
+    setInWishlist(isInWishlist);
+  }, [wishlist]);
+
+const handleWishlistToggle = () => {
+  if (inWishlist) {
+    removeFromWishlist(product.id);
+  } else {
+    console.log("Adding to wishlist:", product.id);
+  }
+  setInWishlist(!inWishlist); 
+};
+
+  
+
   return (
     <section className="pt-32 pb-12 lg:py-32 h-screen flex items-center">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center">
-          <div className="flex flex-1 justify-center items-center mb-8 lg:mb-0 ">
+          <div className="flex flex-1 justify-center items-center mb-8 lg:mb-0">
             <img className="max-w-[200px] lg:max-w-sm" src={image} alt="" />
           </div>
           <div className="flex-1 text-center lg:text-left">
@@ -36,23 +58,37 @@ const ProductDetails = () => {
               $ {price}
             </div>
             <div className="mb-3">
-            <Rating value={rating.rate} readOnly />
+              <Rating value={rating.rate} readOnly />
             </div>
             <p className="mb-8 capitalize">{description}</p>
 
+            <a
+              href="#_"
+              onClick={handleWishlistToggle}
+              className="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group mr-4"
+            >
+              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+                {inWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
+              </span>
+            </a>
+
             <button
               onClick={() => addToCart(product, product.id)}
-              className="relative inline-block text-lg group"
+              className="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group"
             >
-              <span className="relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-900 rounded-lg group-hover:text-white">
-                <span className="absolute inset-0 w-full h-full px-5 py-3 rounded-lg bg-gray-50"></span>
-                <span className="absolute left-0 w-48 h-48 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-gray-900 group-hover:-rotate-180 ease"></span>
-                <span className="relative">Add To Cart</span>
+              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+                Add To Cart
               </span>
-              <span
-                className="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-gray-900 rounded-lg group-hover:mb-0 group-hover:mr-0"
-                data-rounded="rounded-lg"
-              ></span>
             </button>
           </div>
         </div>
