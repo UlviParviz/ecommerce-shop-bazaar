@@ -9,7 +9,7 @@ To clone and run this project locally, follow these simple steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/UlviParvizoghlu/ecommerce-shop-bazaar.git
+   git clone https://github.com/UlviParviz/ecommerce-shop-bazaar.git
 
 2. Navigate into the project directory:
 
